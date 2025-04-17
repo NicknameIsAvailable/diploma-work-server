@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Lesson {
+  id              String           @id @default(uuid())
+  label           String
+  description     String
+  scheduleLessons ScheduleLesson[]
+}
+
+model ScheduleLesson {
+  id            String       @id @default(uuid())
+  order         Int          @default(0)
+  audiences     String[]
+  lesson        Lesson       @relation(fields: [lessonId], references: [id])
+  lessonId      String
+  teachers      User[]       @relation("LessonTeachers")
+  scheduleDay   ScheduleDay? @relation(fields: [scheduleDayId], references: [id])
+  scheduleDayId String?
+}
+
+model Schedule {
+  id      String        @id @default(uuid())
+  group   Group         @relation(fields: [groupId], references: [id])
+  groupId String        @unique
+  days    ScheduleDay[]
+}
+
+model ScheduleDay {
+  id         String           @id @default(uuid())
+  day        String
+  schedule   Schedule         @relation(fields: [scheduleId], references: [id])
+  lessons    ScheduleLesson[]
+  scheduleId String
+}
+
+model Group {
+  id        String    @id @default(uuid())
+  label     String
+  number    String
+  curator   User      @relation("GroupCurator", fields: [curatorId], references: [id])
+  students  User[]    @relation("GroupStudents")
+  schedule  Schedule?
+  curatorId String
+}
+
+enum UserRole {
+  STUDENT
+  TEACHER
+  ADMIN
+}
+
+model User {
+  id             String           @id @default(uuid())
+  name           String
+  surname        String
+  curatedGroups  Group[]          @relation("GroupCurator")
+  studentGroup   Group?           @relation("GroupStudents", fields: [studentGroupId], references: [id])
+  studentGroupId String?
+  taughtLessons  ScheduleLesson[] @relation("LessonTeachers")
+  role           UserRole         @default(STUDENT)
+}
