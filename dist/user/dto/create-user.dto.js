@@ -39,6 +39,38 @@ __decorate([
 ], CreateUserDto.prototype, "surname", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
+        description: 'Логин пользователя',
+        example: 'ivanov123',
+    }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "login", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Email пользователя',
+        example: 'ivan@example.com',
+    }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "email", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Пароль пользователя',
+        example: 'password123',
+    }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "password", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Повторите пароль пользователя',
+        example: 'password123',
+    }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateUserDto.prototype, "repeatPassword", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
         description: 'ID группы пользователя',
         example: '123e4567-e89b-12d3-a456-426614174000',
     }),

@@ -32,9 +32,22 @@ export class LessonService {
 
   async createMany(data: CreateLessonDto[]) {
     try {
-      return await this.prisma.lesson.createMany({
-        data,
+      const labels = data.map((dto) => dto.label);
+
+      const existingLessons = await this.prisma.lesson.findMany({
+        where: { label: { in: labels } },
+        select: { label: true },
       });
+      const existingLabels = new Set(existingLessons.map((l) => l.label));
+
+      const toCreate = data.filter((dto) => !existingLabels.has(dto.label));
+
+      if (toCreate.length === 0) return [];
+
+      const createdLessons = await Promise.all(
+        toCreate.map((dto) => this.create(dto)),
+      );
+      return createdLessons;
     } catch {
       throw new InternalServerErrorException(
         'Failed to create multiple lessons',
@@ -85,14 +98,10 @@ export class LessonService {
 
   async remove(id: string) {
     try {
-      return await this.prisma.lesson.delete({
-        where: { id },
-      });
+      return await this.prisma.lesson.delete({ where: { id } });
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        if (error.code === 'P2025') {
-          throw new NotFoundException(`Lesson with ID ${id} not found`);
-        }
+      if (error.code === 'P2025') {
+        throw new NotFoundException('Lesson not found');
       }
       throw new InternalServerErrorException('Failed to remove lesson');
     }

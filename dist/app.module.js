@@ -18,6 +18,16 @@ const group_module_1 = require("./group/group.module");
 const user_module_1 = require("./user/user.module");
 const schedule_lesson_module_1 = require("./schedule-lesson/schedule-lesson.module");
 const config_1 = require("@nestjs/config");
+const lesson_order_module_1 = require("./lesson-order/lesson-order.module");
+const speciality_module_1 = require("./speciality/speciality.module");
+const auth_module_1 = require("./auth/auth.module");
+const location_module_1 = require("./location/location.module");
+const excel_parser_service_1 = require("./excel-parser/excel-parser.service");
+const csv_parser_module_1 = require("./csv-parser/csv-parser.module");
+const jwt_1 = require("@nestjs/jwt");
+const jwt_config_1 = require("./config/jwt.config");
+const core_1 = require("@nestjs/core");
+const role_guard_1 = require("./role/role.guard");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -25,18 +35,38 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             prisma_module_1.PrismaModule,
+            config_1.ConfigModule.forRoot({
+                isGlobal: true,
+                envFilePath: '.env',
+            }),
+            jwt_1.JwtModule.registerAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: jwt_config_1.getJwtConfig,
+                global: true,
+            }),
             lesson_module_1.LessonModule,
             schedule_module_1.ScheduleModule,
             group_module_1.GroupModule,
             user_module_1.UserModule,
             schedule_lesson_module_1.ScheduleLessonModule,
-            config_1.ConfigModule.forRoot({
-                isGlobal: true,
-                envFilePath: '.env',
-            }),
+            lesson_order_module_1.LessonOrderModule,
+            speciality_module_1.SpecialityModule,
+            auth_module_1.AuthModule,
+            location_module_1.LocationModule,
+            csv_parser_module_1.CsvParserModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, prisma_service_1.PrismaService],
+        providers: [
+            app_service_1.AppService,
+            prisma_service_1.PrismaService,
+            excel_parser_service_1.ExcelParserService,
+            {
+                provide: core_1.APP_GUARD,
+                useClass: role_guard_1.RolesGuard,
+            },
+        ],
+        exports: [jwt_1.JwtModule],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

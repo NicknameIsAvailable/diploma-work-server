@@ -11,13 +11,14 @@ const common_1 = require("@nestjs/common");
 const group_service_1 = require("./group.service");
 const group_controller_1 = require("./group.controller");
 const prisma_service_1 = require("../prisma/prisma.service");
+const jwt_1 = require("@nestjs/jwt");
 let GroupModule = class GroupModule {
 };
 exports.GroupModule = GroupModule;
 exports.GroupModule = GroupModule = __decorate([
     (0, common_1.Module)({
         controllers: [group_controller_1.GroupController],
-        providers: [group_service_1.GroupService, prisma_service_1.PrismaService],
+        providers: [group_service_1.GroupService, prisma_service_1.PrismaService, jwt_1.JwtService],
     })
 ], GroupModule);
 //# sourceMappingURL=group.module.js.map

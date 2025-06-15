@@ -49,6 +49,20 @@ export class ScheduleLessonDto {
   @Max(2)
   @Min(1)
   teacherIds: string[];
+
+  @ApiProperty({
+    description: 'ID номера урока',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+  })
+  @IsUUID()
+  orderId: string;
+
+  @ApiProperty({
+    description: 'ID связанного расписания дня',
+    example: '123e4567-e89b-12d3-a456-426614174000',
+  })
+  @IsUUID()
+  scheduleDayId: string;
 }
 
 export class ScheduleDayDto {

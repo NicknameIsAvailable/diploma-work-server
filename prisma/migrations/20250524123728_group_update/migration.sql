@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Group" ALTER COLUMN "endYear" DROP NOT NULL,
+ALTER COLUMN "startYear" DROP NOT NULL;

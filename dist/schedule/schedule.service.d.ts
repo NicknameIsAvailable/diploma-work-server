@@ -7,9 +7,14 @@ export declare class ScheduleService {
     create(createScheduleDto: CreateScheduleDto): Promise<{
         group: {
             number: string;
-            label: string;
             id: string;
-            curatorId: string;
+            createdAt: Date;
+            updatedAt: Date | null;
+            curatorId: string | null;
+            endYear: number | null;
+            specialityId: string | null;
+            startYear: number | null;
+            course: number;
         };
         _count: {
             group: number;
@@ -17,19 +22,28 @@ export declare class ScheduleService {
         };
         days: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date | null;
             day: string;
             scheduleId: string;
         }[];
     } & {
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
         groupId: string;
     }>;
     createMany(createScheduleDtos: CreateScheduleDto[]): Promise<({
         group: {
             number: string;
-            label: string;
             id: string;
-            curatorId: string;
+            createdAt: Date;
+            updatedAt: Date | null;
+            curatorId: string | null;
+            endYear: number | null;
+            specialityId: string | null;
+            startYear: number | null;
+            course: number;
         };
         _count: {
             group: number;
@@ -37,19 +51,28 @@ export declare class ScheduleService {
         };
         days: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date | null;
             day: string;
             scheduleId: string;
         }[];
     } & {
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
         groupId: string;
     })[]>;
     findAll(groupIDs?: string[], teacherIDs?: string[], lessonIDs?: string[]): Promise<({
         group: {
             number: string;
-            label: string;
             id: string;
-            curatorId: string;
+            createdAt: Date;
+            updatedAt: Date | null;
+            curatorId: string | null;
+            endYear: number | null;
+            specialityId: string | null;
+            startYear: number | null;
+            course: number;
         };
         _count: {
             group: number;
@@ -57,19 +80,28 @@ export declare class ScheduleService {
         };
         days: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date | null;
             day: string;
             scheduleId: string;
         }[];
     } & {
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
         groupId: string;
     })[]>;
     findOne(id: string): Promise<{
         group: {
             number: string;
-            label: string;
             id: string;
-            curatorId: string;
+            createdAt: Date;
+            updatedAt: Date | null;
+            curatorId: string | null;
+            endYear: number | null;
+            specialityId: string | null;
+            startYear: number | null;
+            course: number;
         };
         _count: {
             group: number;
@@ -77,19 +109,28 @@ export declare class ScheduleService {
         };
         days: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date | null;
             day: string;
             scheduleId: string;
         }[];
     } & {
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
         groupId: string;
     }>;
     update(id: string, updateScheduleDto: UpdateScheduleDto): Promise<{
         group: {
             number: string;
-            label: string;
             id: string;
-            curatorId: string;
+            createdAt: Date;
+            updatedAt: Date | null;
+            curatorId: string | null;
+            endYear: number | null;
+            specialityId: string | null;
+            startYear: number | null;
+            course: number;
         };
         _count: {
             group: number;
@@ -97,15 +138,21 @@ export declare class ScheduleService {
         };
         days: {
             id: string;
+            createdAt: Date;
+            updatedAt: Date | null;
             day: string;
             scheduleId: string;
         }[];
     } & {
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
         groupId: string;
     }>;
     remove(id: string): Promise<{
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
         groupId: string;
     }>;
     private createDaysData;

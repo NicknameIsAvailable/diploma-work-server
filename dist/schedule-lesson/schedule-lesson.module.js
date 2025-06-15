@@ -11,13 +11,14 @@ const common_1 = require("@nestjs/common");
 const schedule_lesson_service_1 = require("./schedule-lesson.service");
 const schedule_lesson_controller_1 = require("./schedule-lesson.controller");
 const prisma_service_1 = require("../prisma/prisma.service");
+const jwt_1 = require("@nestjs/jwt");
 let ScheduleLessonModule = class ScheduleLessonModule {
 };
 exports.ScheduleLessonModule = ScheduleLessonModule;
 exports.ScheduleLessonModule = ScheduleLessonModule = __decorate([
     (0, common_1.Module)({
         controllers: [schedule_lesson_controller_1.ScheduleLessonController],
-        providers: [schedule_lesson_service_1.ScheduleLessonService, prisma_service_1.PrismaService],
+        providers: [schedule_lesson_service_1.ScheduleLessonService, prisma_service_1.PrismaService, jwt_1.JwtService],
     })
 ], ScheduleLessonModule);
 //# sourceMappingURL=schedule-lesson.module.js.map

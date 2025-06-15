@@ -67,6 +67,22 @@ __decorate([
     (0, class_validator_1.Min)(1),
     __metadata("design:type", Array)
 ], ScheduleLessonDto.prototype, "teacherIds", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'ID номера урока',
+        example: '123e4567-e89b-12d3-a456-426614174000',
+    }),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], ScheduleLessonDto.prototype, "orderId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'ID связанного расписания дня',
+        example: '123e4567-e89b-12d3-a456-426614174000',
+    }),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], ScheduleLessonDto.prototype, "scheduleDayId", void 0);
 class ScheduleDayDto {
 }
 exports.ScheduleDayDto = ScheduleDayDto;

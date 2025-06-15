@@ -18,7 +18,7 @@ let ScheduleLessonService = class ScheduleLessonService {
         this.prisma = prisma;
     }
     async create(createScheduleLessonDto) {
-        const { teacherIds, lessonId, ...lessonData } = createScheduleLessonDto;
+        const { teacherIds, lessonId, orderId, audiences, ...lessonData } = createScheduleLessonDto;
         try {
             const teachers = await this.prisma.user.findMany({
                 where: {
@@ -36,14 +36,19 @@ let ScheduleLessonService = class ScheduleLessonService {
                     lesson: {
                         connect: { id: lessonId },
                     },
+                    order: {
+                        connect: { id: orderId },
+                    },
                     teachers: {
                         connect: teachers.map((teacher) => ({ id: teacher.id })),
                     },
+                    audiences: audiences,
                 },
                 include: {
                     teachers: true,
                     lesson: true,
                     scheduleDay: true,
+                    order: true,
                 },
             });
         }

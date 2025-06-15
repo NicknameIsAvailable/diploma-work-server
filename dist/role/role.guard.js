@@ -12,20 +12,68 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RolesGuard = void 0;
 const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
+const role_decorator_1 = require("./role.decorator");
+const jwt_1 = require("@nestjs/jwt");
 const prisma_service_1 = require("../prisma/prisma.service");
+const config_1 = require("@nestjs/config");
 let RolesGuard = class RolesGuard {
-    constructor(reflector, prisma) {
+    constructor(reflector, jwt, prisma, configService) {
         this.reflector = reflector;
+        this.jwt = jwt;
         this.prisma = prisma;
+        this.configService = configService;
+    }
+    async getRole(accessToken) {
+        try {
+            const secret = this.configService.get('JWT_SECRET');
+            if (!secret) {
+                throw new Error('JWT_SECRET is not configured');
+            }
+            const decoded = await this.jwt.verifyAsync(accessToken, { secret });
+            const user = await this.prisma.user.findUnique({
+                where: { id: decoded.id },
+            });
+            if (!user) {
+                throw new common_1.UnauthorizedException('User not found');
+            }
+            return user.role;
+        }
+        catch (error) {
+            throw new common_1.UnauthorizedException('Invalid or expired token');
+        }
     }
     async canActivate(context) {
-        return true;
+        const requiredRoles = this.reflector.getAllAndOverride(role_decorator_1.ROLES_KEY, [context.getHandler(), context.getClass()]);
+        if (!requiredRoles || requiredRoles.length === 0) {
+            return true;
+        }
+        const request = context.switchToHttp().getRequest();
+        const accessToken = request.cookies?.accessToken;
+        if (!accessToken) {
+            throw new common_1.UnauthorizedException('Access token not found');
+        }
+        try {
+            const role = await this.getRole(accessToken);
+            if (!requiredRoles.includes(role)) {
+                throw new common_1.ForbiddenException('Недостаточно прав');
+            }
+            return true;
+        }
+        catch (error) {
+            if (error instanceof common_1.UnauthorizedException ||
+                error instanceof common_1.ForbiddenException) {
+                throw error;
+            }
+            throw new common_1.UnauthorizedException('Authentication failed');
+        }
     }
 };
 exports.RolesGuard = RolesGuard;
 exports.RolesGuard = RolesGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [core_1.Reflector,
-        prisma_service_1.PrismaService])
+        jwt_1.JwtService,
+        prisma_service_1.PrismaService,
+        config_1.ConfigService])
 ], RolesGuard);
 //# sourceMappingURL=role.guard.js.map

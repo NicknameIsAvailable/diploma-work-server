@@ -13,12 +13,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ScheduleLessonService } from './schedule-lesson.service';
 import { CreateScheduleLessonDto } from './dto/create-schedule-lesson.dto';
 import { UpdateScheduleLessonDto } from './dto/update-schedule-lesson.dto';
 import { Roles } from 'src/role/role.decorator';
 import { EUserRole } from 'src/user/dto/create-user.dto';
+import { RolesGuard } from 'src/role/role.guard';
 
 @ApiTags('Уроки в расписании')
 @ApiBearerAuth()
@@ -27,7 +29,8 @@ export class ScheduleLessonController {
   constructor(private readonly scheduleLessonService: ScheduleLessonService) {}
 
   @Post()
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создать новый урок в расписании' })
   @ApiResponse({
     status: 201,
@@ -44,7 +47,8 @@ export class ScheduleLessonController {
   }
 
   @Post('many')
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создать несколько уроков в расписании' })
   @ApiResponse({
     status: 201,
@@ -85,7 +89,8 @@ export class ScheduleLessonController {
   }
 
   @Patch(':id')
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Обновить урок в расписании по ID' })
   @ApiParam({ name: 'id', description: 'ID урока в расписании' })
   @ApiResponse({
@@ -106,7 +111,8 @@ export class ScheduleLessonController {
   }
 
   @Delete(':id')
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Удалить урок в расписании по ID' })
   @ApiParam({ name: 'id', description: 'ID урока в расписании' })
   @ApiResponse({ status: 200, description: 'Урок в расписании успешно удален' })

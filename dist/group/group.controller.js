@@ -20,6 +20,7 @@ const create_group_dto_1 = require("./dto/create-group.dto");
 const update_group_dto_1 = require("./dto/update-group.dto");
 const role_decorator_1 = require("../role/role.decorator");
 const create_user_dto_1 = require("../user/dto/create-user.dto");
+const role_guard_1 = require("../role/role.guard");
 let GroupController = class GroupController {
     constructor(groupService) {
         this.groupService = groupService;
@@ -46,7 +47,7 @@ let GroupController = class GroupController {
 exports.GroupController = GroupController;
 __decorate([
     (0, common_1.Post)(),
-    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.ADMIN),
+    (0, common_1.UseGuards)(role_guard_1.RolesGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Создать новую группу' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -58,6 +59,8 @@ __decorate([
         description: 'Доступ запрещен. Требуются права администратора',
     }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Некорректный запрос' }),
+    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.TEACHER, create_user_dto_1.EUserRole.ADMIN),
+    (0, common_1.UseGuards)(role_guard_1.RolesGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_group_dto_1.CreateGroupDto]),
@@ -65,7 +68,7 @@ __decorate([
 ], GroupController.prototype, "create", null);
 __decorate([
     (0, common_1.Post)('many'),
-    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.ADMIN),
+    (0, common_1.UseGuards)(role_guard_1.RolesGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Создать несколько групп' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -77,6 +80,8 @@ __decorate([
         description: 'Доступ запрещен. Требуются права администратора',
     }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Некорректный запрос' }),
+    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.TEACHER, create_user_dto_1.EUserRole.ADMIN),
+    (0, common_1.UseGuards)(role_guard_1.RolesGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array]),
@@ -111,7 +116,6 @@ __decorate([
 ], GroupController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.ADMIN),
     (0, swagger_1.ApiOperation)({ summary: 'Обновить группу по ID' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID группы' }),
     (0, swagger_1.ApiResponse)({
@@ -124,6 +128,8 @@ __decorate([
         description: 'Доступ запрещен. Требуются права администратора',
     }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Группа не найдена' }),
+    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.TEACHER, create_user_dto_1.EUserRole.ADMIN),
+    (0, common_1.UseGuards)(role_guard_1.RolesGuard),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -132,7 +138,6 @@ __decorate([
 ], GroupController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.ADMIN),
     (0, swagger_1.ApiOperation)({ summary: 'Удалить группу по ID' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID группы' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Группа успешно удалена' }),
@@ -141,6 +146,8 @@ __decorate([
         description: 'Доступ запрещен. Требуются права администратора',
     }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Группа не найдена' }),
+    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.TEACHER, create_user_dto_1.EUserRole.ADMIN),
+    (0, common_1.UseGuards)(role_guard_1.RolesGuard),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

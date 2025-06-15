@@ -11,13 +11,36 @@ const common_1 = require("@nestjs/common");
 const schedule_service_1 = require("./schedule.service");
 const schedule_controller_1 = require("./schedule.controller");
 const prisma_service_1 = require("../prisma/prisma.service");
+const excel_parser_service_1 = require("../excel-parser/excel-parser.service");
+const csv_parser_service_1 = require("../csv-parser/csv-parser.service");
+const group_service_1 = require("../group/group.service");
+const lesson_order_service_1 = require("../lesson-order/lesson-order.service");
+const lesson_service_1 = require("../lesson/lesson.service");
+const user_module_1 = require("../user/user.module");
+const auth_module_1 = require("../auth/auth.module");
+const group_module_1 = require("../group/group.module");
+const jwt_1 = require("@nestjs/jwt");
 let ScheduleModule = class ScheduleModule {
 };
 exports.ScheduleModule = ScheduleModule;
 exports.ScheduleModule = ScheduleModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            (0, common_1.forwardRef)(() => user_module_1.UserModule),
+            (0, common_1.forwardRef)(() => auth_module_1.AuthModule),
+            (0, common_1.forwardRef)(() => group_module_1.GroupModule),
+        ],
         controllers: [schedule_controller_1.ScheduleController],
-        providers: [schedule_service_1.ScheduleService, prisma_service_1.PrismaService],
+        providers: [
+            prisma_service_1.PrismaService,
+            jwt_1.JwtService,
+            excel_parser_service_1.ExcelParserService,
+            csv_parser_service_1.CsvParserService,
+            lesson_service_1.LessonService,
+            lesson_order_service_1.LessonOrderService,
+            schedule_service_1.ScheduleService,
+            group_service_1.GroupService,
+        ],
     })
 ], ScheduleModule);
 //# sourceMappingURL=schedule.module.js.map

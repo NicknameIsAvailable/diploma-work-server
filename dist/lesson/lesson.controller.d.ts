@@ -8,26 +8,42 @@ export declare class LessonController {
         description: string;
         label: string;
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
-    createMany(data: CreateLessonDto[]): Promise<import("@prisma/client").Prisma.BatchPayload>;
+    createMany(data: CreateLessonDto[]): Promise<{
+        description: string;
+        label: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
+    }[]>;
     findAll(): Promise<{
         description: string;
         label: string;
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }[]>;
     findOne(id: string): Promise<{
         description: string;
         label: string;
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
     update(id: string, updateLessonDto: UpdateLessonDto): Promise<{
         description: string;
         label: string;
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
     remove(id: string): Promise<{
         description: string;
         label: string;
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
 }

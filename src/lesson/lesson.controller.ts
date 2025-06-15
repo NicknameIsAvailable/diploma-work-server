@@ -1,9 +1,11 @@
+import { Lesson } from './entities/lesson.entity';
 import {
   ApiTags,
   ApiOperation,
   ApiResponse,
   ApiParam,
   ApiBearerAuth,
+  ApiBody,
 } from '@nestjs/swagger';
 import {
   Controller,
@@ -13,12 +15,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { LessonService } from './lesson.service';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { Roles } from 'src/role/role.decorator';
 import { EUserRole } from 'src/user/dto/create-user.dto';
+import { RolesGuard } from 'src/role/role.guard';
 
 @ApiTags('Уроки')
 @ApiBearerAuth()
@@ -27,12 +31,14 @@ export class LessonController {
   constructor(private readonly lessonService: LessonService) {}
 
   @Post()
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создать новый урок' })
+  @ApiBody({ type: CreateLessonDto })
   @ApiResponse({
     status: 201,
     description: 'Урок успешно создан',
-    type: CreateLessonDto,
+    type: Lesson,
   })
   @ApiResponse({
     status: 403,
@@ -44,12 +50,15 @@ export class LessonController {
   }
 
   @Post('many')
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создать несколько уроков' })
+  @ApiBody({ type: CreateLessonDto, isArray: true })
   @ApiResponse({
     status: 201,
     description: 'Уроки успешно созданы',
-    type: [CreateLessonDto],
+    type: Lesson,
+    isArray: true,
   })
   @ApiResponse({
     status: 403,
@@ -65,7 +74,8 @@ export class LessonController {
   @ApiResponse({
     status: 200,
     description: 'Возвращает список всех уроков',
-    type: [CreateLessonDto],
+    type: Lesson,
+    isArray: true,
   })
   findAll() {
     return this.lessonService.findAll();
@@ -74,24 +84,22 @@ export class LessonController {
   @Get(':id')
   @ApiOperation({ summary: 'Получить урок по ID' })
   @ApiParam({ name: 'id', description: 'ID урока' })
-  @ApiResponse({
-    status: 200,
-    description: 'Возвращает урок',
-    type: CreateLessonDto,
-  })
+  @ApiResponse({ status: 200, description: 'Возвращает урок', type: Lesson })
   @ApiResponse({ status: 404, description: 'Урок не найден' })
   findOne(@Param('id') id: string) {
     return this.lessonService.findOne(id);
   }
 
   @Patch(':id')
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Обновить урок по ID' })
   @ApiParam({ name: 'id', description: 'ID урока' })
+  @ApiBody({ type: UpdateLessonDto })
   @ApiResponse({
     status: 200,
     description: 'Урок успешно обновлен',
-    type: CreateLessonDto,
+    type: Lesson,
   })
   @ApiResponse({
     status: 403,
@@ -103,7 +111,8 @@ export class LessonController {
   }
 
   @Delete(':id')
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Удалить урок по ID' })
   @ApiParam({ name: 'id', description: 'ID урока' })
   @ApiResponse({ status: 200, description: 'Урок успешно удален' })

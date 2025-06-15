@@ -8,61 +8,115 @@ datasource db {
 }
 
 model Lesson {
-  id              String           @id @default(uuid())
+  id              String           @id @unique @default(uuid())
   label           String
   description     String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime?        @updatedAt
   scheduleLessons ScheduleLesson[]
 }
 
 model ScheduleLesson {
-  id            String       @id @default(uuid())
-  order         Int          @default(0)
-  audiences     String[]
-  lesson        Lesson       @relation(fields: [lessonId], references: [id])
-  lessonId      String
-  teachers      User[]       @relation("LessonTeachers")
-  scheduleDay   ScheduleDay? @relation(fields: [scheduleDayId], references: [id])
+  id            String       @id @unique @default(uuid())
   scheduleDayId String?
+  lessonId      String
+  audiences     String[]
+  createdAt     DateTime     @default(now())
+  orderId       String
+  updatedAt     DateTime?    @updatedAt
+  lesson        Lesson       @relation(fields: [lessonId], references: [id])
+  order         LessonOrder  @relation(fields: [orderId], references: [id])
+  scheduleDay   ScheduleDay? @relation(fields: [scheduleDayId], references: [id])
+  teachers      User[]       @relation("LessonTeachers")
+}
+
+model LessonOrder {
+  id              String           @id @unique @default(uuid())
+  updatedAt       DateTime?        @updatedAt
+  createdAt       DateTime         @default(now())
+  order           Int
+  startTime       String
+  endTime         String
+  scheduleLessons ScheduleLesson[]
 }
 
 model Schedule {
-  id      String        @id @default(uuid())
-  group   Group         @relation(fields: [groupId], references: [id])
-  groupId String        @unique
-  days    ScheduleDay[]
+  id        String        @id @unique @default(uuid())
+  groupId   String        @unique
+  createdAt DateTime      @default(now())
+  updatedAt DateTime?     @updatedAt
+  group     Group         @relation(fields: [groupId], references: [id])
+  days      ScheduleDay[]
 }
 
 model ScheduleDay {
-  id         String           @id @default(uuid())
+  id         String           @id @unique @default(uuid())
+  scheduleId String
   day        String
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime?        @updatedAt
   schedule   Schedule         @relation(fields: [scheduleId], references: [id])
   lessons    ScheduleLesson[]
-  scheduleId String
 }
 
 model Group {
-  id        String    @id @default(uuid())
-  label     String
-  number    String
-  curator   User      @relation("GroupCurator", fields: [curatorId], references: [id])
-  students  User[]    @relation("GroupStudents")
-  schedule  Schedule?
-  curatorId String
+  id           String      @id @unique @default(uuid())
+  curatorId    String?
+  createdAt    DateTime    @default(now())
+  endYear      Int?
+  specialityId String?
+  startYear    Int?
+  number       String
+  course       Int
+  updatedAt    DateTime?   @updatedAt
+  curator      User?       @relation("GroupCurator", fields: [curatorId], references: [id])
+  speciality   Speciality? @relation(fields: [specialityId], references: [id])
+  schedule     Schedule?
+  students     User[]      @relation("GroupStudents")
+}
+
+model Location {
+  id           String       @id @unique @default(uuid())
+  updatedAt    DateTime?    @updatedAt
+  createdAt    DateTime     @default(now())
+  title        String
+  address      String
+  code         String
+  description  String?
+  specialities Speciality[]
+}
+
+model Speciality {
+  id          String    @id @unique @default(uuid())
+  updatedAt   DateTime? @updatedAt
+  createdAt   DateTime  @default(now())
+  title       String
+  number      String
+  code        String
+  description String?
+  groups      Group[]
+  location    Location? @relation(fields: [locationId], references: [id])
+  locationId  String?
+}
+
+model User {
+  id             String           @id @unique @default(uuid())
+  name           String
+  surname        String
+  studentGroupId String?
+  role           UserRole         @default(STUDENT)
+  createdAt      DateTime         @default(now())
+  passwordHash   String
+  updatedAt      DateTime?        @updatedAt
+  email          String           @unique @default("")
+  login          String           @unique @default("")
+  curatedGroups  Group[]          @relation("GroupCurator")
+  studentGroup   Group?           @relation("GroupStudents", fields: [studentGroupId], references: [id])
+  taughtLessons  ScheduleLesson[] @relation("LessonTeachers")
 }
 
 enum UserRole {
   STUDENT
   TEACHER
   ADMIN
-}
-
-model User {
-  id             String           @id @default(uuid())
-  name           String
-  surname        String
-  curatedGroups  Group[]          @relation("GroupCurator")
-  studentGroup   Group?           @relation("GroupStudents", fields: [studentGroupId], references: [id])
-  studentGroupId String?
-  taughtLessons  ScheduleLesson[] @relation("LessonTeachers")
-  role           UserRole         @default(STUDENT)
 }

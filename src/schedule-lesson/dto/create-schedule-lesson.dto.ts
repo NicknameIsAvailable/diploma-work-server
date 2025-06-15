@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsInt, IsString, IsUUID, Max, Min } from 'class-validator';
+import { IsArray, IsString, IsUUID } from 'class-validator';
 
 export class CreateScheduleLessonDto {
   @ApiProperty({
@@ -31,13 +31,9 @@ export class CreateScheduleLessonDto {
   teacherIds: string[];
 
   @ApiProperty({
-    description: 'Порядковый номер урока (от 0 до 10)',
-    example: 1,
-    minimum: 0,
-    maximum: 10,
+    description: 'ID номера урока',
+    example: '123e4567-e89b-12d3-a456-426614174000',
   })
-  @IsInt()
-  @Min(0)
-  @Max(10)
-  order: number;
+  @IsUUID()
+  orderId: string;
 }

@@ -13,12 +13,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { Roles } from 'src/role/role.decorator';
 import { EUserRole } from 'src/user/dto/create-user.dto';
+import { RolesGuard } from 'src/role/role.guard';
 
 @ApiTags('Группы')
 @ApiBearerAuth()
@@ -27,7 +29,7 @@ export class GroupController {
   constructor(private readonly groupService: GroupService) {}
 
   @Post()
-  @Roles(EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создать новую группу' })
   @ApiResponse({
     status: 201,
@@ -39,12 +41,14 @@ export class GroupController {
     description: 'Доступ запрещен. Требуются права администратора',
   })
   @ApiResponse({ status: 400, description: 'Некорректный запрос' })
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   create(@Body() createGroupDto: CreateGroupDto) {
     return this.groupService.create(createGroupDto);
   }
 
   @Post('many')
-  @Roles(EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создать несколько групп' })
   @ApiResponse({
     status: 201,
@@ -56,6 +60,8 @@ export class GroupController {
     description: 'Доступ запрещен. Требуются права администратора',
   })
   @ApiResponse({ status: 400, description: 'Некорректный запрос' })
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   createMany(@Body() createGroupDto: CreateGroupDto[]) {
     return this.groupService.createMany(createGroupDto);
   }
@@ -85,7 +91,6 @@ export class GroupController {
   }
 
   @Patch(':id')
-  @Roles(EUserRole.ADMIN)
   @ApiOperation({ summary: 'Обновить группу по ID' })
   @ApiParam({ name: 'id', description: 'ID группы' })
   @ApiResponse({
@@ -98,12 +103,13 @@ export class GroupController {
     description: 'Доступ запрещен. Требуются права администратора',
   })
   @ApiResponse({ status: 404, description: 'Группа не найдена' })
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
     return this.groupService.update(id, updateGroupDto);
   }
 
   @Delete(':id')
-  @Roles(EUserRole.ADMIN)
   @ApiOperation({ summary: 'Удалить группу по ID' })
   @ApiParam({ name: 'id', description: 'ID группы' })
   @ApiResponse({ status: 200, description: 'Группа успешно удалена' })
@@ -112,6 +118,8 @@ export class GroupController {
     description: 'Доступ запрещен. Требуются права администратора',
   })
   @ApiResponse({ status: 404, description: 'Группа не найдена' })
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   remove(@Param('id') id: string) {
     return this.groupService.remove(id);
   }

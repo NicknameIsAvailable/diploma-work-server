@@ -11,13 +11,14 @@ const common_1 = require("@nestjs/common");
 const lesson_service_1 = require("./lesson.service");
 const lesson_controller_1 = require("./lesson.controller");
 const prisma_service_1 = require("../prisma/prisma.service");
+const jwt_1 = require("@nestjs/jwt");
 let LessonModule = class LessonModule {
 };
 exports.LessonModule = LessonModule;
 exports.LessonModule = LessonModule = __decorate([
     (0, common_1.Module)({
         controllers: [lesson_controller_1.LessonController],
-        providers: [lesson_service_1.LessonService, prisma_service_1.PrismaService],
+        providers: [lesson_service_1.LessonService, prisma_service_1.PrismaService, jwt_1.JwtService],
     })
 ], LessonModule);
 //# sourceMappingURL=lesson.module.js.map

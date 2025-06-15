@@ -20,6 +20,7 @@ const create_schedule_lesson_dto_1 = require("./dto/create-schedule-lesson.dto")
 const update_schedule_lesson_dto_1 = require("./dto/update-schedule-lesson.dto");
 const role_decorator_1 = require("../role/role.decorator");
 const create_user_dto_1 = require("../user/dto/create-user.dto");
+const role_guard_1 = require("../role/role.guard");
 let ScheduleLessonController = class ScheduleLessonController {
     constructor(scheduleLessonService) {
         this.scheduleLessonService = scheduleLessonService;
@@ -46,7 +47,8 @@ let ScheduleLessonController = class ScheduleLessonController {
 exports.ScheduleLessonController = ScheduleLessonController;
 __decorate([
     (0, common_1.Post)(),
-    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.ADMIN),
+    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.TEACHER, create_user_dto_1.EUserRole.ADMIN),
+    (0, common_1.UseGuards)(role_guard_1.RolesGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Создать новый урок в расписании' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -65,7 +67,8 @@ __decorate([
 ], ScheduleLessonController.prototype, "create", null);
 __decorate([
     (0, common_1.Post)('many'),
-    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.ADMIN),
+    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.TEACHER, create_user_dto_1.EUserRole.ADMIN),
+    (0, common_1.UseGuards)(role_guard_1.RolesGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Создать несколько уроков в расписании' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -111,7 +114,8 @@ __decorate([
 ], ScheduleLessonController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.ADMIN),
+    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.TEACHER, create_user_dto_1.EUserRole.ADMIN),
+    (0, common_1.UseGuards)(role_guard_1.RolesGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Обновить урок в расписании по ID' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID урока в расписании' }),
     (0, swagger_1.ApiResponse)({
@@ -132,7 +136,8 @@ __decorate([
 ], ScheduleLessonController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.ADMIN),
+    (0, role_decorator_1.Roles)(create_user_dto_1.EUserRole.TEACHER, create_user_dto_1.EUserRole.ADMIN),
+    (0, common_1.UseGuards)(role_guard_1.RolesGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Удалить урок в расписании по ID' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'ID урока в расписании' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Урок в расписании успешно удален' }),

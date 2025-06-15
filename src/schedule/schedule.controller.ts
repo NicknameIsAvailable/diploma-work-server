@@ -15,21 +15,37 @@ import {
   Param,
   Delete,
   Query,
+  UseInterceptors,
+  UploadedFile,
+  UseGuards,
 } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
 import { Roles } from 'src/role/role.decorator';
 import { EUserRole } from 'src/user/dto/create-user.dto';
+import { ExcelParserService } from 'src/excel-parser/excel-parser.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { File as MulterFile } from 'multer';
+import {
+  CsvParserService,
+  ParsedScheduleData,
+} from 'src/csv-parser/csv-parser.service';
+import { RolesGuard } from 'src/role/role.guard';
 
 @ApiTags('Расписание')
 @ApiBearerAuth()
 @Controller('schedule')
 export class ScheduleController {
-  constructor(private readonly scheduleService: ScheduleService) {}
+  constructor(
+    private readonly scheduleService: ScheduleService,
+    private readonly excelParserService: ExcelParserService,
+    private readonly csvParserService: CsvParserService,
+  ) {}
 
   @Post()
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создать новое расписание' })
   @ApiResponse({
     status: 201,
@@ -45,8 +61,29 @@ export class ScheduleController {
     return this.scheduleService.create(createScheduleDto);
   }
 
+  @Post('parse')
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiOperation({ summary: 'Парсинг Excel-файла в CSV' })
+  @ApiResponse({
+    status: 201,
+    description: 'Файл успешно распаршен',
+    type: String,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Доступ запрещен. Требуются права администратора',
+  })
+  @ApiResponse({ status: 400, description: 'Некорректный файл' })
+  parseSchedule(@UploadedFile() file: MulterFile): Promise<ParsedScheduleData> {
+    const csv = this.csvParserService.parseScheduleCSV(file.buffer);
+    return csv;
+  }
+
   @Post('many')
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создать несколько расписаний' })
   @ApiResponse({
     status: 201,
@@ -89,20 +126,10 @@ export class ScheduleController {
     description: 'Возвращает список расписаний',
     type: [CreateScheduleDto],
   })
-  findAll(
-    @Query('groupIDs') groupIDs?: string,
-    @Query('teacherIDs') teacherIDs?: string,
-    @Query('lessonIDs') lessonIDs?: string,
-  ) {
+  findAll(@Query('groupIDs') groupIDs?: string) {
     const groupIDsArray = groupIDs ? groupIDs.split(',') : undefined;
-    const teacherIDsArray = teacherIDs ? teacherIDs.split(',') : undefined;
-    const lessonIDsArray = lessonIDs ? lessonIDs.split(',') : undefined;
 
-    return this.scheduleService.findAll(
-      groupIDsArray,
-      teacherIDsArray,
-      lessonIDsArray,
-    );
+    return this.scheduleService.findAll(groupIDsArray);
   }
 
   @Get(':id')
@@ -119,7 +146,8 @@ export class ScheduleController {
   }
 
   @Patch(':id')
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Обновить расписание по ID' })
   @ApiParam({ name: 'id', description: 'ID расписания' })
   @ApiResponse({
@@ -140,7 +168,8 @@ export class ScheduleController {
   }
 
   @Delete(':id')
-  @Roles(EUserRole.ADMIN)
+  @Roles(EUserRole.TEACHER, EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Удалить расписание по ID' })
   @ApiParam({ name: 'id', description: 'ID расписания' })
   @ApiResponse({ status: 200, description: 'Расписание успешно удалено' })

@@ -1,17 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsString, IsUUID } from 'class-validator';
+import {
+  IsArray,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Min,
+} from 'class-validator';
 
 export class CreateGroupDto {
   @ApiProperty({
     description: 'Название группы',
     example: 'Группа A-101',
-  })
-  @IsString()
-  label: string;
-
-  @ApiProperty({
-    description: 'Номер группы',
-    example: '101',
   })
   @IsString()
   number: string;
@@ -33,12 +33,41 @@ export class CreateGroupDto {
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
   @IsUUID()
-  curatorId: string;
+  @IsOptional()
+  curatorId?: string;
 
   @ApiProperty({
-    description: 'ID расписания группы',
+    description: 'ID специальности группы',
     example: '123e4567-e89b-12d3-a456-426614174000',
+    required: false,
   })
   @IsUUID()
-  shceduleId: string;
+  @IsOptional()
+  specialityId?: string;
+
+  @ApiProperty({
+    description: 'Год начала обучения',
+    example: 2023,
+  })
+  @IsInt()
+  @Min(2000)
+  @IsOptional()
+  startYear?: number;
+
+  @ApiProperty({
+    description: 'Год окончания обучения',
+    example: 2024,
+  })
+  @IsInt()
+  @Min(2000)
+  @IsOptional()
+  endYear?: number;
+
+  @ApiProperty({
+    description: 'Курс группы',
+    example: 2,
+  })
+  @IsInt()
+  @Min(1)
+  course: number;
 }

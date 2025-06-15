@@ -1,7 +1,6 @@
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Prisma } from '@prisma/client';
 export declare class LessonService {
     private prisma;
     constructor(prisma: PrismaService);
@@ -9,26 +8,42 @@ export declare class LessonService {
         description: string;
         label: string;
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
-    createMany(data: CreateLessonDto[]): Promise<Prisma.BatchPayload>;
+    createMany(data: CreateLessonDto[]): Promise<{
+        description: string;
+        label: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
+    }[]>;
     findAll(): Promise<{
         description: string;
         label: string;
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }[]>;
     findOne(id: string): Promise<{
         description: string;
         label: string;
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
     update(id: string, updateLessonDto: UpdateLessonDto): Promise<{
         description: string;
         label: string;
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
     remove(id: string): Promise<{
         description: string;
         label: string;
         id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
 }

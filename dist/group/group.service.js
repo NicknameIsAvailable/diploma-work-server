@@ -18,20 +18,19 @@ let GroupService = class GroupService {
         this.prisma = prisma;
     }
     async create(createGroupDto) {
-        const { studentIds, curatorId, ...groupData } = createGroupDto;
+        const { studentIds, curatorId, specialityId, ...groupData } = createGroupDto;
         try {
             return await this.prisma.group.create({
                 data: {
                     ...groupData,
-                    curator: {
-                        connect: { id: curatorId },
-                    },
+                    curatorId,
                     students: {
                         connect: studentIds.map((id) => ({ id })),
                     },
                     schedule: {
                         create: {},
                     },
+                    specialityId,
                 },
                 include: {
                     students: true,
@@ -41,6 +40,7 @@ let GroupService = class GroupService {
             });
         }
         catch (error) {
+            console.error('Group creation error:', error);
             if (error instanceof client_1.Prisma.PrismaClientKnownRequestError) {
                 if (error.code === 'P2002') {
                     throw new common_1.BadRequestException('Group with this number already exists');
@@ -54,7 +54,16 @@ let GroupService = class GroupService {
     }
     async createMany(createGroupDtos) {
         try {
-            const createdGroups = await Promise.all(createGroupDtos.map(async (dto) => this.create(dto)));
+            const numbers = createGroupDtos.map((dto) => dto.number);
+            const existingGroups = await this.prisma.group.findMany({
+                where: { number: { in: numbers } },
+                select: { number: true },
+            });
+            const existingNumbers = new Set(existingGroups.map((g) => g.number));
+            const toCreate = createGroupDtos.filter((dto) => !existingNumbers.has(dto.number));
+            if (toCreate.length === 0)
+                return [];
+            const createdGroups = await Promise.all(toCreate.map(async (dto) => this.create(dto)));
             return createdGroups;
         }
         catch (error) {
@@ -68,6 +77,7 @@ let GroupService = class GroupService {
                 include: {
                     curator: true,
                     students: true,
+                    speciality: true,
                 },
             });
         }
@@ -82,6 +92,7 @@ let GroupService = class GroupService {
                 include: {
                     curator: true,
                     students: true,
+                    speciality: true,
                 },
             });
             if (!group) {
@@ -97,7 +108,7 @@ let GroupService = class GroupService {
         }
     }
     async update(id, updateGroupDto) {
-        const { studentIds, curatorId, ...groupData } = updateGroupDto;
+        const { studentIds, curatorId, specialityId, ...groupData } = updateGroupDto;
         try {
             return await this.prisma.group.update({
                 where: { id },
@@ -111,6 +122,11 @@ let GroupService = class GroupService {
                     students: studentIds
                         ? {
                             set: studentIds.map((id) => ({ id })),
+                        }
+                        : undefined,
+                    speciality: specialityId
+                        ? {
+                            connect: { id: specialityId },
                         }
                         : undefined,
                 },

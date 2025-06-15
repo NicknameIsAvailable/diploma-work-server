@@ -13,11 +13,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, EUserRole } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Roles } from 'src/role/role.decorator';
+import { RolesGuard } from 'src/role/role.guard';
 
 @ApiTags('Пользователи')
 @ApiBearerAuth()
@@ -27,6 +30,7 @@ export class UserController {
 
   @Post()
   @Roles(EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создать нового пользователя' })
   @ApiResponse({
     status: 201,
@@ -44,6 +48,7 @@ export class UserController {
 
   @Post('many')
   @Roles(EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Создать несколько пользователей' })
   @ApiResponse({
     status: 201,
@@ -60,14 +65,14 @@ export class UserController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Получить список всех пользователей' })
+  @ApiOperation({ summary: 'Получить список всех пользователей с фильтрацией' })
   @ApiResponse({
     status: 200,
     description: 'Возвращает список всех пользователей',
     type: [CreateUserDto],
   })
-  findAll() {
-    return this.userService.findAll();
+  findAll(@Query() query: Partial<Record<keyof CreateUserDto, string>>) {
+    return this.userService.findAll(query);
   }
 
   @Get(':id')
@@ -85,6 +90,7 @@ export class UserController {
 
   @Patch(':id')
   @Roles(EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Обновить пользователя по ID' })
   @ApiParam({ name: 'id', description: 'ID пользователя' })
   @ApiResponse({
@@ -103,6 +109,7 @@ export class UserController {
 
   @Delete(':id')
   @Roles(EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Удалить пользователя по ID' })
   @ApiParam({ name: 'id', description: 'ID пользователя' })
   @ApiResponse({ status: 200, description: 'Пользователь успешно удален' })
@@ -113,5 +120,19 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'Пользователь не найден' })
   remove(@Param('id') id: string) {
     return this.userService.remove(id);
+  }
+
+  @Delete('many')
+  @Roles(EUserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  @ApiOperation({ summary: 'Удалить нескольких пользователей' })
+  @ApiResponse({ status: 200, description: 'Пользователи успешно удалены' })
+  @ApiResponse({
+    status: 403,
+    description: 'Доступ запрещен. Требуются права администратора',
+  })
+  @ApiResponse({ status: 400, description: 'Некорректный запрос' })
+  removeMany(@Param('userIds') userIds: string[]) {
+    return this.userService.removeMany(userIds);
   }
 }

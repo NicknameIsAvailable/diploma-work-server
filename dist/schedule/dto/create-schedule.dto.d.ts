@@ -12,6 +12,8 @@ export declare class ScheduleLessonDto {
     order: number;
     audiences: string[];
     teacherIds: string[];
+    orderId: string;
+    scheduleDayId: string;
 }
 export declare class ScheduleDayDto {
     day: DayEnum;

@@ -86,40 +86,40 @@ export class ScheduleService {
     try {
       const where: any = {};
 
-      if (groupIDs && groupIDs.length > 0) {
-        where.groupId = {
-          in: groupIDs,
-        };
+      if (groupIDs?.length) {
+        where.groupId = { in: groupIDs };
       }
 
-      if (teacherIDs && teacherIDs.length > 0) {
-        where.days = {
-          some: {
-            lessons: {
-              some: {
-                teachers: {
-                  some: {
-                    id: {
-                      in: teacherIDs,
-                    },
-                  },
+      const daysConditions: any[] = [];
+
+      if (teacherIDs?.length) {
+        daysConditions.push({
+          lessons: {
+            some: {
+              teachers: {
+                some: {
+                  id: { in: teacherIDs },
                 },
               },
             },
           },
-        };
+        });
       }
 
-      if (lessonIDs && lessonIDs.length > 0) {
+      if (lessonIDs?.length) {
+        daysConditions.push({
+          lessons: {
+            some: {
+              lessonId: { in: lessonIDs },
+            },
+          },
+        });
+      }
+
+      if (daysConditions.length) {
         where.days = {
           some: {
-            lessons: {
-              some: {
-                lessonId: {
-                  in: lessonIDs,
-                },
-              },
-            },
+            AND: daysConditions,
           },
         };
       }
@@ -229,7 +229,9 @@ export class ScheduleService {
         day: day.day,
         lessons: {
           create: day.lessons.map((lesson) => ({
-            order: lesson.order,
+            order: {
+              connect: { id: lesson.orderId },
+            },
             audiences: lesson.audiences,
             lesson: {
               connect: { id: lesson.lessonId },
@@ -255,7 +257,9 @@ export class ScheduleService {
               teachers: true,
             },
             orderBy: {
-              order: 'asc',
+              order: {
+                order: 'asc',
+              },
             },
           },
         },
@@ -263,7 +267,11 @@ export class ScheduleService {
           day: 'asc',
         },
       },
-      group: true,
+      group: {
+        include: {
+          speciality: true,
+        },
+      },
     };
   }
 }

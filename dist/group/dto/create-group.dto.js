@@ -22,14 +22,6 @@ __decorate([
     }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateGroupDto.prototype, "label", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({
-        description: 'Номер группы',
-        example: '101',
-    }),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
 ], CreateGroupDto.prototype, "number", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
@@ -50,14 +42,46 @@ __decorate([
         example: '123e4567-e89b-12d3-a456-426614174000',
     }),
     (0, class_validator_1.IsUUID)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateGroupDto.prototype, "curatorId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: 'ID расписания группы',
+        description: 'ID специальности группы',
         example: '123e4567-e89b-12d3-a456-426614174000',
+        required: false,
     }),
     (0, class_validator_1.IsUUID)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateGroupDto.prototype, "shceduleId", void 0);
+], CreateGroupDto.prototype, "specialityId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Год начала обучения',
+        example: 2023,
+    }),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.Min)(2000),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], CreateGroupDto.prototype, "startYear", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Год окончания обучения',
+        example: 2024,
+    }),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.Min)(2000),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], CreateGroupDto.prototype, "endYear", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Курс группы',
+        example: 2,
+    }),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.Min)(1),
+    __metadata("design:type", Number)
+], CreateGroupDto.prototype, "course", void 0);
 //# sourceMappingURL=create-group.dto.js.map

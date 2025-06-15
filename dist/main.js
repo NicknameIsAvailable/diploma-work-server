@@ -4,8 +4,12 @@ const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const config_1 = require("@nestjs/config");
 const swagger_1 = require("@nestjs/swagger");
+const path_1 = require("path");
+const cookieParser = require("cookie-parser");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    app.setGlobalPrefix('api');
+    app.useStaticAssets((0, path_1.join)(__dirname, '..', 'public'));
     const swaggerConfig = new swagger_1.DocumentBuilder()
         .setTitle('Metrostroy Schedule API')
         .setDescription('API для сайта расписания колледжа метростроя')
@@ -18,9 +22,10 @@ async function bootstrap() {
     app.enableCors({
         origin: configService.get('CLIENT_URL'),
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: 'Content-Type, Accept',
+        allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
+        credentials: true,
     });
-    app.setGlobalPrefix('api');
+    app.use(cookieParser());
     await app.listen(8000);
 }
 bootstrap();

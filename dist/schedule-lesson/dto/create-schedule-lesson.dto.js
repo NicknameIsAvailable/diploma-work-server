@@ -48,14 +48,10 @@ __decorate([
 ], CreateScheduleLessonDto.prototype, "teacherIds", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: 'Порядковый номер урока (от 0 до 10)',
-        example: 1,
-        minimum: 0,
-        maximum: 10,
+        description: 'ID номера урока',
+        example: '123e4567-e89b-12d3-a456-426614174000',
     }),
-    (0, class_validator_1.IsInt)(),
-    (0, class_validator_1.Min)(0),
-    (0, class_validator_1.Max)(10),
-    __metadata("design:type", Number)
-], CreateScheduleLessonDto.prototype, "order", void 0);
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], CreateScheduleLessonDto.prototype, "orderId", void 0);
 //# sourceMappingURL=create-schedule-lesson.dto.js.map
