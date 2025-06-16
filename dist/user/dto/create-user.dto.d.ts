@@ -10,6 +10,6 @@ export declare class CreateUserDto {
     email: string;
     password: string;
     repeatPassword: string;
-    groupId: string;
+    groupId?: string;
     role: EUserRole;
 }

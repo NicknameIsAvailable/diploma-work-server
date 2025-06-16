@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsString, IsUUID } from 'class-validator';
+import { IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export enum EUserRole {
   TEACHER = 'TEACHER',
@@ -55,7 +55,8 @@ export class CreateUserDto {
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
   @IsUUID()
-  groupId: string;
+  @IsOptional()
+  groupId?: string;
 
   @ApiProperty({
     description: 'Роль пользователя',

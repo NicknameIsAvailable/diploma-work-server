@@ -10,6 +10,6 @@ export declare class RegistrationDto {
     email: string;
     password: string;
     repeatPassword: string;
-    groupId: string;
+    groupId?: string;
     role: EUserRole;
 }

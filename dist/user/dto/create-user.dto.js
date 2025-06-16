@@ -75,6 +75,7 @@ __decorate([
         example: '123e4567-e89b-12d3-a456-426614174000',
     }),
     (0, class_validator_1.IsUUID)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "groupId", void 0);
 __decorate([

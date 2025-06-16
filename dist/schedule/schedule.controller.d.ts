@@ -10,6 +10,10 @@ export declare class ScheduleController {
     private readonly csvParserService;
     constructor(scheduleService: ScheduleService, excelParserService: ExcelParserService, csvParserService: CsvParserService);
     create(createScheduleDto: CreateScheduleDto): Promise<{
+        _count: {
+            group: number;
+            days: number;
+        };
         group: {
             number: string;
             id: string;
@@ -20,10 +24,6 @@ export declare class ScheduleController {
             specialityId: string | null;
             startYear: number | null;
             course: number;
-        };
-        _count: {
-            group: number;
-            days: number;
         };
         days: {
             id: string;
@@ -40,6 +40,10 @@ export declare class ScheduleController {
     }>;
     parseSchedule(file: MulterFile): Promise<ParsedScheduleData>;
     createMany(createScheduleDto: CreateScheduleDto[]): Promise<({
+        _count: {
+            group: number;
+            days: number;
+        };
         group: {
             number: string;
             id: string;
@@ -50,10 +54,6 @@ export declare class ScheduleController {
             specialityId: string | null;
             startYear: number | null;
             course: number;
-        };
-        _count: {
-            group: number;
-            days: number;
         };
         days: {
             id: string;
@@ -69,6 +69,10 @@ export declare class ScheduleController {
         groupId: string;
     })[]>;
     findAll(groupIDs?: string): Promise<({
+        _count: {
+            group: number;
+            days: number;
+        };
         group: {
             number: string;
             id: string;
@@ -79,10 +83,6 @@ export declare class ScheduleController {
             specialityId: string | null;
             startYear: number | null;
             course: number;
-        };
-        _count: {
-            group: number;
-            days: number;
         };
         days: {
             id: string;
@@ -98,6 +98,10 @@ export declare class ScheduleController {
         groupId: string;
     })[]>;
     findOne(id: string): Promise<{
+        _count: {
+            group: number;
+            days: number;
+        };
         group: {
             number: string;
             id: string;
@@ -108,10 +112,6 @@ export declare class ScheduleController {
             specialityId: string | null;
             startYear: number | null;
             course: number;
-        };
-        _count: {
-            group: number;
-            days: number;
         };
         days: {
             id: string;
@@ -127,6 +127,10 @@ export declare class ScheduleController {
         groupId: string;
     }>;
     update(id: string, updateScheduleDto: UpdateScheduleDto): Promise<{
+        _count: {
+            group: number;
+            days: number;
+        };
         group: {
             number: string;
             id: string;
@@ -137,10 +141,6 @@ export declare class ScheduleController {
             specialityId: string | null;
             startYear: number | null;
             course: number;
-        };
-        _count: {
-            group: number;
-            days: number;
         };
         days: {
             id: string;

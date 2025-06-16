@@ -5,49 +5,49 @@ export declare class LocationController {
     private readonly locationService;
     constructor(locationService: LocationService);
     create(createLocationDto: CreateLocationDto): Promise<{
-        description: string | null;
-        title: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        code: string;
+        createdAt: Date;
+        title: string;
         address: string;
+        code: string;
+        description: string | null;
     }>;
     createMany(createLocationDtos: CreateLocationDto[]): Promise<import("@prisma/client").Prisma.BatchPayload>;
     findAll(): Promise<{
-        description: string | null;
-        title: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        code: string;
+        createdAt: Date;
+        title: string;
         address: string;
+        code: string;
+        description: string | null;
     }[]>;
     findOne(id: string): Promise<{
-        description: string | null;
-        title: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        code: string;
+        createdAt: Date;
+        title: string;
         address: string;
+        code: string;
+        description: string | null;
     }>;
     update(id: string, updateLocationDto: UpdateLocationDto): Promise<{
-        description: string | null;
-        title: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        code: string;
+        createdAt: Date;
+        title: string;
         address: string;
+        code: string;
+        description: string | null;
     }>;
     remove(id: string): Promise<{
-        description: string | null;
-        title: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        code: string;
+        createdAt: Date;
+        title: string;
         address: string;
+        code: string;
+        description: string | null;
     }>;
 }

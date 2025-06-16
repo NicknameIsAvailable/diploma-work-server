@@ -5,108 +5,108 @@ export declare class ScheduleLessonController {
     private readonly scheduleLessonService;
     constructor(scheduleLessonService: ScheduleLessonService);
     create(createScheduleLessonDto: CreateScheduleLessonDto): Promise<{
-        lesson: {
-            description: string;
-            label: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date | null;
-        };
-        scheduleDay: {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date | null;
-            day: string;
-            scheduleId: string;
-        };
         order: {
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
             order: number;
             startTime: string;
             endTime: string;
         };
-        teachers: {
-            name: string;
+        lesson: {
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            description: string;
+            label: string;
+        };
+        scheduleDay: {
+            id: string;
+            updatedAt: Date | null;
+            createdAt: Date;
+            scheduleId: string;
+            day: string;
+        };
+        teachers: {
+            id: string;
+            updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         }[];
     } & {
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        audiences: string[];
-        lessonId: string;
+        createdAt: Date;
         scheduleDayId: string | null;
+        lessonId: string;
+        audiences: string[];
         orderId: string;
     }>;
     createMany(createScheduleLessonDto: CreateScheduleLessonDto[]): Promise<({
-        lesson: {
-            description: string;
-            label: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date | null;
-        };
-        scheduleDay: {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date | null;
-            day: string;
-            scheduleId: string;
-        };
         order: {
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
             order: number;
             startTime: string;
             endTime: string;
         };
-        teachers: {
-            name: string;
+        lesson: {
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            description: string;
+            label: string;
+        };
+        scheduleDay: {
+            id: string;
+            updatedAt: Date | null;
+            createdAt: Date;
+            scheduleId: string;
+            day: string;
+        };
+        teachers: {
+            id: string;
+            updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         }[];
     } & {
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        audiences: string[];
-        lessonId: string;
+        createdAt: Date;
         scheduleDayId: string | null;
+        lessonId: string;
+        audiences: string[];
         orderId: string;
     })[]>;
     findAll(): Promise<({
         lesson: {
+            id: string;
+            updatedAt: Date | null;
+            createdAt: Date;
             description: string;
             label: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date | null;
         };
         scheduleDay: {
             schedule: {
                 group: {
                     number: string;
                     id: string;
-                    createdAt: Date;
                     updatedAt: Date | null;
+                    createdAt: Date;
                     curatorId: string | null;
                     endYear: number | null;
                     specialityId: string | null;
@@ -115,98 +115,98 @@ export declare class ScheduleLessonController {
                 };
             } & {
                 id: string;
-                createdAt: Date;
                 updatedAt: Date | null;
+                createdAt: Date;
                 groupId: string;
             };
         } & {
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
-            day: string;
+            createdAt: Date;
             scheduleId: string;
+            day: string;
         };
         teachers: {
-            name: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         }[];
     } & {
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        audiences: string[];
-        lessonId: string;
+        createdAt: Date;
         scheduleDayId: string | null;
+        lessonId: string;
+        audiences: string[];
         orderId: string;
     })[]>;
     findOne(id: string): Promise<{
         lesson: {
+            id: string;
+            updatedAt: Date | null;
+            createdAt: Date;
             description: string;
             label: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date | null;
         };
         scheduleDay: {
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
-            day: string;
+            createdAt: Date;
             scheduleId: string;
+            day: string;
         };
     } & {
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        audiences: string[];
-        lessonId: string;
+        createdAt: Date;
         scheduleDayId: string | null;
+        lessonId: string;
+        audiences: string[];
         orderId: string;
     }>;
     update(id: string, updateScheduleLessonDto: UpdateScheduleLessonDto): Promise<{
         lesson: {
+            id: string;
+            updatedAt: Date | null;
+            createdAt: Date;
             description: string;
             label: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date | null;
         };
         teachers: {
-            name: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         }[];
     } & {
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        audiences: string[];
-        lessonId: string;
+        createdAt: Date;
         scheduleDayId: string | null;
+        lessonId: string;
+        audiences: string[];
         orderId: string;
     }>;
     remove(id: string): Promise<{
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
-        audiences: string[];
-        lessonId: string;
+        createdAt: Date;
         scheduleDayId: string | null;
+        lessonId: string;
+        audiences: string[];
         orderId: string;
     }>;
 }

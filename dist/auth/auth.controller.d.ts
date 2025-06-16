@@ -7,15 +7,15 @@ export declare class AuthController {
     constructor(authService: AuthService);
     login(dto: AuthDto, res: Response): Promise<{
         user: {
-            name: string;
             id: string;
+            name: string;
+            surname: string;
+            studentGroupId: string | null;
+            role: import("@prisma/client").$Enums.UserRole;
             createdAt: Date;
             updatedAt: Date | null;
-            surname: string;
-            login: string;
             email: string;
-            role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
+            login: string;
         };
     }>;
     profile(req: Request): Promise<{
@@ -32,27 +32,27 @@ export declare class AuthController {
                 course: number;
             }[];
             studentGroup: {
+                curator: {
+                    id: string;
+                    name: string;
+                    surname: string;
+                    studentGroupId: string | null;
+                    role: import("@prisma/client").$Enums.UserRole;
+                    createdAt: Date;
+                    passwordHash: string;
+                    updatedAt: Date | null;
+                    email: string;
+                    login: string;
+                };
                 speciality: {
                     number: string;
-                    description: string | null;
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date | null;
                     title: string;
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date | null;
                     code: string;
+                    description: string | null;
                     locationId: string | null;
-                };
-                curator: {
-                    name: string;
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date | null;
-                    surname: string;
-                    login: string;
-                    email: string;
-                    role: import("@prisma/client").$Enums.UserRole;
-                    studentGroupId: string | null;
-                    passwordHash: string;
                 };
             } & {
                 number: string;
@@ -65,15 +65,15 @@ export declare class AuthController {
                 startYear: number | null;
                 course: number;
             };
-            name: string;
             id: string;
+            name: string;
+            surname: string;
+            studentGroupId: string | null;
+            role: import("@prisma/client").$Enums.UserRole;
             createdAt: Date;
             updatedAt: Date | null;
-            surname: string;
-            login: string;
             email: string;
-            role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
+            login: string;
         };
     }>;
     getNewTokens(req: Request, res: Response): Promise<{
@@ -90,27 +90,27 @@ export declare class AuthController {
                 course: number;
             }[];
             studentGroup: {
+                curator: {
+                    id: string;
+                    name: string;
+                    surname: string;
+                    studentGroupId: string | null;
+                    role: import("@prisma/client").$Enums.UserRole;
+                    createdAt: Date;
+                    passwordHash: string;
+                    updatedAt: Date | null;
+                    email: string;
+                    login: string;
+                };
                 speciality: {
                     number: string;
-                    description: string | null;
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date | null;
                     title: string;
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date | null;
                     code: string;
+                    description: string | null;
                     locationId: string | null;
-                };
-                curator: {
-                    name: string;
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date | null;
-                    surname: string;
-                    login: string;
-                    email: string;
-                    role: import("@prisma/client").$Enums.UserRole;
-                    studentGroupId: string | null;
-                    passwordHash: string;
                 };
             } & {
                 number: string;
@@ -124,29 +124,29 @@ export declare class AuthController {
                 course: number;
             };
         } & {
-            name: string;
             id: string;
-            createdAt: Date;
-            updatedAt: Date | null;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
-            role: import("@prisma/client").$Enums.UserRole;
             studentGroupId: string | null;
+            role: import("@prisma/client").$Enums.UserRole;
+            createdAt: Date;
             passwordHash: string;
+            updatedAt: Date | null;
+            email: string;
+            login: string;
         };
     }>;
     register(res: Response, dto: RegistrationDto): Promise<{
         user: {
-            name: string;
             id: string;
+            name: string;
+            surname: string;
+            studentGroupId: string | null;
+            role: import("@prisma/client").$Enums.UserRole;
             createdAt: Date;
             updatedAt: Date | null;
-            surname: string;
-            login: string;
             email: string;
-            role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
+            login: string;
         };
     }>;
     logout(res: Response): Promise<boolean>;

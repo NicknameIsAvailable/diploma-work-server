@@ -7,39 +7,39 @@ export declare class GroupController {
     create(createGroupDto: CreateGroupDto): Promise<{
         schedule: {
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
             groupId: string;
         };
         curator: {
-            name: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         };
         students: {
-            name: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         }[];
     } & {
         number: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
+        createdAt: Date;
         curatorId: string | null;
         endYear: number | null;
         specialityId: string | null;
@@ -49,39 +49,39 @@ export declare class GroupController {
     createMany(createGroupDto: CreateGroupDto[]): Promise<({
         schedule: {
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
             groupId: string;
         };
         curator: {
-            name: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         };
         students: {
-            name: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         }[];
     } & {
         number: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
+        createdAt: Date;
         curatorId: string | null;
         endYear: number | null;
         specialityId: string | null;
@@ -89,45 +89,45 @@ export declare class GroupController {
         course: number;
     })[]>;
     findAll(): Promise<({
+        curator: {
+            id: string;
+            updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
+            surname: string;
+            role: import("@prisma/client").$Enums.UserRole;
+            passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
+        };
         speciality: {
             number: string;
-            description: string | null;
-            title: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            title: string;
             code: string;
+            description: string | null;
             locationId: string | null;
         };
-        curator: {
-            name: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date | null;
-            surname: string;
-            login: string;
-            email: string;
-            role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
-            passwordHash: string;
-        };
         students: {
-            name: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         }[];
     } & {
         number: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
+        createdAt: Date;
         curatorId: string | null;
         endYear: number | null;
         specialityId: string | null;
@@ -135,45 +135,45 @@ export declare class GroupController {
         course: number;
     })[]>;
     findOne(id: string): Promise<{
+        curator: {
+            id: string;
+            updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
+            surname: string;
+            role: import("@prisma/client").$Enums.UserRole;
+            passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
+        };
         speciality: {
             number: string;
-            description: string | null;
-            title: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            title: string;
             code: string;
+            description: string | null;
             locationId: string | null;
         };
-        curator: {
-            name: string;
-            id: string;
-            createdAt: Date;
-            updatedAt: Date | null;
-            surname: string;
-            login: string;
-            email: string;
-            role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
-            passwordHash: string;
-        };
         students: {
-            name: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         }[];
     } & {
         number: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
+        createdAt: Date;
         curatorId: string | null;
         endYear: number | null;
         specialityId: string | null;
@@ -183,39 +183,39 @@ export declare class GroupController {
     update(id: string, updateGroupDto: UpdateGroupDto): Promise<{
         schedule: {
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
             groupId: string;
         };
         curator: {
-            name: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         };
         students: {
-            name: string;
             id: string;
-            createdAt: Date;
             updatedAt: Date | null;
+            createdAt: Date;
+            name: string;
             surname: string;
-            login: string;
-            email: string;
             role: import("@prisma/client").$Enums.UserRole;
-            studentGroupId: string | null;
             passwordHash: string;
+            email: string;
+            login: string;
+            studentGroupId: string | null;
         }[];
     } & {
         number: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
+        createdAt: Date;
         curatorId: string | null;
         endYear: number | null;
         specialityId: string | null;
@@ -225,8 +225,8 @@ export declare class GroupController {
     remove(id: string): Promise<{
         number: string;
         id: string;
-        createdAt: Date;
         updatedAt: Date | null;
+        createdAt: Date;
         curatorId: string | null;
         endYear: number | null;
         specialityId: string | null;

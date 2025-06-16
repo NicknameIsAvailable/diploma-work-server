@@ -20,27 +20,27 @@ export declare class JwtStrategy extends JwtStrategy_base {
             course: number;
         }[];
         studentGroup: {
+            curator: {
+                id: string;
+                name: string;
+                surname: string;
+                studentGroupId: string | null;
+                role: import("@prisma/client").$Enums.UserRole;
+                createdAt: Date;
+                passwordHash: string;
+                updatedAt: Date | null;
+                email: string;
+                login: string;
+            };
             speciality: {
                 number: string;
-                description: string | null;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date | null;
                 title: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date | null;
                 code: string;
+                description: string | null;
                 locationId: string | null;
-            };
-            curator: {
-                name: string;
-                id: string;
-                createdAt: Date;
-                updatedAt: Date | null;
-                surname: string;
-                login: string;
-                email: string;
-                role: import("@prisma/client").$Enums.UserRole;
-                studentGroupId: string | null;
-                passwordHash: string;
             };
         } & {
             number: string;
@@ -54,16 +54,16 @@ export declare class JwtStrategy extends JwtStrategy_base {
             course: number;
         };
     } & {
-        name: string;
         id: string;
-        createdAt: Date;
-        updatedAt: Date | null;
+        name: string;
         surname: string;
-        login: string;
-        email: string;
-        role: import("@prisma/client").$Enums.UserRole;
         studentGroupId: string | null;
+        role: import("@prisma/client").$Enums.UserRole;
+        createdAt: Date;
         passwordHash: string;
+        updatedAt: Date | null;
+        email: string;
+        login: string;
     }>;
 }
 export {};
