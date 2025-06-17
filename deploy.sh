@@ -6,9 +6,6 @@ APP_DIR="/var/www/$APP_NAME"
 REPO_SOURCE_DIR="$PWD"
 PORT=8000
 DOMAIN="metrostroy-schedule.local"
-DB_NAME="metrostroydb"
-DB_USER="metrostroy_user"
-DB_PASSWORD="secure_password_here"
 
 # === Проверка и установка утилит ===
 install_if_missing() {
@@ -29,19 +26,26 @@ install_if_missing pnpm "npm install -g pnpm"
 install_if_missing pm2 "npm install -g pm2"
 install_if_missing nginx "sudo apt install nginx -y && sudo systemctl enable nginx && sudo systemctl start nginx"
 
-# === Установка PostgreSQL ===
-if ! command -v psql &> /dev/null; then
-  echo "📦 Установка PostgreSQL..."
-  sudo apt install postgresql postgresql-contrib -y
-  sudo systemctl enable postgresql
-  sudo systemctl start postgresql
-
-  # Создание пользователя и базы данных
-  sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD '$DB_PASSWORD';"
-  sudo -u postgres psql -c "CREATE DATABASE $DB_NAME OWNER $DB_USER;"
-  sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;"
+# === Установка Docker ===
+if ! command -v docker &> /dev/null; then
+  echo "📦 Установка Docker..."
+  curl -fsSL https://get.docker.com -o get-docker.sh
+  sudo sh get-docker.sh
+  sudo usermod -aG docker $USER
+  sudo systemctl enable docker
+  sudo systemctl start docker
+  rm get-docker.sh
 else
-  echo "✅ PostgreSQL уже установлен"
+  echo "✅ Docker уже установлен"
+fi
+
+# === Установка Docker Compose ===
+if ! command -v docker-compose &> /dev/null; then
+  echo "📦 Установка Docker Compose..."
+  sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+else
+  echo "✅ Docker Compose уже установлен"
 fi
 
 # === Копирование проекта, если нужно ===
@@ -67,26 +71,31 @@ fi
 
 # === Создание production конфигурации ===
 echo "🔧 Настройка production окружения..."
-cat > .env.production << EOF
-DATABASE_URL="postgresql://$DB_USER:$DB_PASSWORD@localhost:5432/$DB_NAME"
-POSTGRES_USER="$DB_USER"
-POSTGRES_PASSWORD="$DB_PASSWORD"
-POSTGRES_DB="$DB_NAME"
-POSTGRES_PORT=5432
 
-APP_PORT=$PORT
-NODE_ENV=production
+# Проверяем существование .env файла
+if [ ! -f .env ]; then
+  echo "❌ .env файл не найден!"
+  echo "Создание .env файла с базовыми настройками..."
+  cat > .env << EOF
+DATABASE_URL="postgresql://metrostroy_user:secure_password@localhost:5432/metrostroydb"
+POSTGRES_USER="metrostroy_user"
+POSTGRES_PASSWORD="secure_password"
+POSTGRES_DB="metrostroydb"
 
-JWT_SECRET=$(openssl rand -base64 32)
-
-CLIENT_URL=http://$DOMAIN
-
-NGINX_PORT=80
-NGINX_SSL_PORT=443
+CLIENT_URL="http://$DOMAIN"
+JWT_SECRET="$(openssl rand -base64 32)"
 EOF
+  echo "⚠️  Обновите .env файл с вашими настройками перед продолжением!"
+fi
 
-# Создание символической ссылки
-ln -sf .env.production .env
+# === Запуск PostgreSQL в Docker ===
+echo "🐳 Запуск PostgreSQL через Docker Compose..."
+docker-compose down || true
+docker-compose up -d
+
+# Ждем пока база данных запустится
+echo "⏳ Ожидание запуска базы данных..."
+sleep 15
 
 # === Установка зависимостей и билд ===
 echo "📦 Установка зависимостей..."
@@ -150,5 +159,7 @@ sudo nginx -t && sudo systemctl reload nginx
 echo "✅ Деплой завершён!"
 echo "🌐 Приложение доступно по адресу: http://$DOMAIN"
 echo "📚 API документация: http://$DOMAIN/api"
-echo "🔍 Проверить статус: pm2 status"
-echo "📋 Посмотреть логи: pm2 logs $APP_NAME"
+echo "🐳 Проверить Docker контейнеры: docker-compose ps"
+echo "🔍 Проверить статус приложения: pm2 status"
+echo "📋 Посмотреть логи приложения: pm2 logs $APP_NAME"
+echo "📋 Посмотреть логи БД: docker-compose logs postgres"
