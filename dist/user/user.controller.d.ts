@@ -5,28 +5,28 @@ export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
     create(createUserDto: CreateUserDto): Promise<{
-        id: string;
         name: string;
-        surname: string;
-        studentGroupId: string | null;
-        role: import("@prisma/client").$Enums.UserRole;
+        id: string;
         createdAt: Date;
-        passwordHash: string;
         updatedAt: Date | null;
-        email: string;
+        surname: string;
         login: string;
+        email: string;
+        role: import("@prisma/client").$Enums.UserRole;
+        studentGroupId: string | null;
+        passwordHash: string;
     }>;
     createMany(createUserDto: CreateUserDto[]): Promise<{
         user: {
-            id: string;
             name: string;
-            surname: string;
-            studentGroupId: string | null;
-            role: import("@prisma/client").$Enums.UserRole;
+            id: string;
             createdAt: Date;
             updatedAt: Date | null;
-            email: string;
+            surname: string;
             login: string;
+            email: string;
+            role: import("@prisma/client").$Enums.UserRole;
+            studentGroupId: string | null;
         };
         accessToken: string;
         refreshToken: string;
@@ -44,27 +44,27 @@ export declare class UserController {
             course: number;
         }[];
         studentGroup: {
-            curator: {
-                id: string;
-                name: string;
-                surname: string;
-                studentGroupId: string | null;
-                role: import("@prisma/client").$Enums.UserRole;
-                createdAt: Date;
-                passwordHash: string;
-                updatedAt: Date | null;
-                email: string;
-                login: string;
-            };
             speciality: {
                 number: string;
+                description: string | null;
+                title: string;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date | null;
-                title: string;
                 code: string;
-                description: string | null;
                 locationId: string | null;
+            };
+            curator: {
+                name: string;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date | null;
+                surname: string;
+                login: string;
+                email: string;
+                role: import("@prisma/client").$Enums.UserRole;
+                studentGroupId: string | null;
+                passwordHash: string;
             };
         } & {
             number: string;
@@ -78,16 +78,16 @@ export declare class UserController {
             course: number;
         };
     } & {
-        id: string;
         name: string;
-        surname: string;
-        studentGroupId: string | null;
-        role: import("@prisma/client").$Enums.UserRole;
+        id: string;
         createdAt: Date;
-        passwordHash: string;
         updatedAt: Date | null;
-        email: string;
+        surname: string;
         login: string;
+        email: string;
+        role: import("@prisma/client").$Enums.UserRole;
+        studentGroupId: string | null;
+        passwordHash: string;
     })[]>;
     findOne(id: string): import("@prisma/client").Prisma.Prisma__UserClient<{
         curatedGroups: {
@@ -102,27 +102,27 @@ export declare class UserController {
             course: number;
         }[];
         studentGroup: {
-            curator: {
-                id: string;
-                name: string;
-                surname: string;
-                studentGroupId: string | null;
-                role: import("@prisma/client").$Enums.UserRole;
-                createdAt: Date;
-                passwordHash: string;
-                updatedAt: Date | null;
-                email: string;
-                login: string;
-            };
             speciality: {
                 number: string;
+                description: string | null;
+                title: string;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date | null;
-                title: string;
                 code: string;
-                description: string | null;
                 locationId: string | null;
+            };
+            curator: {
+                name: string;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date | null;
+                surname: string;
+                login: string;
+                email: string;
+                role: import("@prisma/client").$Enums.UserRole;
+                studentGroupId: string | null;
+                passwordHash: string;
             };
         } & {
             number: string;
@@ -136,16 +136,16 @@ export declare class UserController {
             course: number;
         };
     } & {
-        id: string;
         name: string;
-        surname: string;
-        studentGroupId: string | null;
-        role: import("@prisma/client").$Enums.UserRole;
+        id: string;
         createdAt: Date;
-        passwordHash: string;
         updatedAt: Date | null;
-        email: string;
+        surname: string;
         login: string;
+        email: string;
+        role: import("@prisma/client").$Enums.UserRole;
+        studentGroupId: string | null;
+        passwordHash: string;
     }, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
         curatedGroups: {
@@ -171,28 +171,28 @@ export declare class UserController {
             course: number;
         };
     } & {
-        id: string;
         name: string;
-        surname: string;
-        studentGroupId: string | null;
-        role: import("@prisma/client").$Enums.UserRole;
+        id: string;
         createdAt: Date;
-        passwordHash: string;
         updatedAt: Date | null;
-        email: string;
+        surname: string;
         login: string;
+        email: string;
+        role: import("@prisma/client").$Enums.UserRole;
+        studentGroupId: string | null;
+        passwordHash: string;
     }>;
     remove(id: string): import("@prisma/client").Prisma.Prisma__UserClient<{
-        id: string;
         name: string;
-        surname: string;
-        studentGroupId: string | null;
-        role: import("@prisma/client").$Enums.UserRole;
+        id: string;
         createdAt: Date;
-        passwordHash: string;
         updatedAt: Date | null;
-        email: string;
+        surname: string;
         login: string;
+        email: string;
+        role: import("@prisma/client").$Enums.UserRole;
+        studentGroupId: string | null;
+        passwordHash: string;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     removeMany(userIds: string[]): Promise<import("@prisma/client").Prisma.BatchPayload>;
 }

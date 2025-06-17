@@ -5,45 +5,45 @@ export declare class LessonController {
     private readonly lessonService;
     constructor(lessonService: LessonService);
     create(createLessonDto: CreateLessonDto): Promise<{
-        id: string;
-        updatedAt: Date | null;
-        createdAt: Date;
         description: string;
         label: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
     createMany(data: CreateLessonDto[]): Promise<{
-        id: string;
-        updatedAt: Date | null;
-        createdAt: Date;
         description: string;
         label: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }[]>;
     findAll(): Promise<{
-        id: string;
-        updatedAt: Date | null;
-        createdAt: Date;
         description: string;
         label: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }[]>;
     findOne(id: string): Promise<{
-        id: string;
-        updatedAt: Date | null;
-        createdAt: Date;
         description: string;
         label: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
     update(id: string, updateLessonDto: UpdateLessonDto): Promise<{
-        id: string;
-        updatedAt: Date | null;
-        createdAt: Date;
         description: string;
         label: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
     remove(id: string): Promise<{
-        id: string;
-        updatedAt: Date | null;
-        createdAt: Date;
         description: string;
         label: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date | null;
     }>;
 }

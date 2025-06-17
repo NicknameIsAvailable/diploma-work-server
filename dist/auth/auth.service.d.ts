@@ -13,15 +13,15 @@ export declare class AuthService {
     REFRESH_TOKEN_NAME: string;
     login(dto: AuthDto): Promise<{
         user: {
-            id: string;
             name: string;
-            surname: string;
-            studentGroupId: string | null;
-            role: import("@prisma/client").$Enums.UserRole;
+            id: string;
             createdAt: Date;
             updatedAt: Date | null;
-            email: string;
+            surname: string;
             login: string;
+            email: string;
+            role: import("@prisma/client").$Enums.UserRole;
+            studentGroupId: string | null;
         };
         accessToken: string;
         refreshToken: string;
@@ -39,27 +39,27 @@ export declare class AuthService {
             course: number;
         }[];
         studentGroup: {
-            curator: {
-                id: string;
-                name: string;
-                surname: string;
-                studentGroupId: string | null;
-                role: import("@prisma/client").$Enums.UserRole;
-                createdAt: Date;
-                passwordHash: string;
-                updatedAt: Date | null;
-                email: string;
-                login: string;
-            };
             speciality: {
                 number: string;
+                description: string | null;
+                title: string;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date | null;
-                title: string;
                 code: string;
-                description: string | null;
                 locationId: string | null;
+            };
+            curator: {
+                name: string;
+                id: string;
+                createdAt: Date;
+                updatedAt: Date | null;
+                surname: string;
+                login: string;
+                email: string;
+                role: import("@prisma/client").$Enums.UserRole;
+                studentGroupId: string | null;
+                passwordHash: string;
             };
         } & {
             number: string;
@@ -72,27 +72,27 @@ export declare class AuthService {
             startYear: number | null;
             course: number;
         };
-        id: string;
         name: string;
-        surname: string;
-        studentGroupId: string | null;
-        role: import("@prisma/client").$Enums.UserRole;
+        id: string;
         createdAt: Date;
         updatedAt: Date | null;
-        email: string;
+        surname: string;
         login: string;
+        email: string;
+        role: import("@prisma/client").$Enums.UserRole;
+        studentGroupId: string | null;
     }>;
     register(dto: RegistrationDto): Promise<{
         user: {
-            id: string;
             name: string;
-            surname: string;
-            studentGroupId: string | null;
-            role: import("@prisma/client").$Enums.UserRole;
+            id: string;
             createdAt: Date;
             updatedAt: Date | null;
-            email: string;
+            surname: string;
             login: string;
+            email: string;
+            role: import("@prisma/client").$Enums.UserRole;
+            studentGroupId: string | null;
         };
         accessToken: string;
         refreshToken: string;
@@ -113,27 +113,27 @@ export declare class AuthService {
                 course: number;
             }[];
             studentGroup: {
-                curator: {
-                    id: string;
-                    name: string;
-                    surname: string;
-                    studentGroupId: string | null;
-                    role: import("@prisma/client").$Enums.UserRole;
-                    createdAt: Date;
-                    passwordHash: string;
-                    updatedAt: Date | null;
-                    email: string;
-                    login: string;
-                };
                 speciality: {
                     number: string;
+                    description: string | null;
+                    title: string;
                     id: string;
                     createdAt: Date;
                     updatedAt: Date | null;
-                    title: string;
                     code: string;
-                    description: string | null;
                     locationId: string | null;
+                };
+                curator: {
+                    name: string;
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date | null;
+                    surname: string;
+                    login: string;
+                    email: string;
+                    role: import("@prisma/client").$Enums.UserRole;
+                    studentGroupId: string | null;
+                    passwordHash: string;
                 };
             } & {
                 number: string;
@@ -147,16 +147,16 @@ export declare class AuthService {
                 course: number;
             };
         } & {
-            id: string;
             name: string;
-            surname: string;
-            studentGroupId: string | null;
-            role: import("@prisma/client").$Enums.UserRole;
+            id: string;
             createdAt: Date;
-            passwordHash: string;
             updatedAt: Date | null;
-            email: string;
+            surname: string;
             login: string;
+            email: string;
+            role: import("@prisma/client").$Enums.UserRole;
+            studentGroupId: string | null;
+            passwordHash: string;
         };
         accessToken: string;
         refreshToken: string;
