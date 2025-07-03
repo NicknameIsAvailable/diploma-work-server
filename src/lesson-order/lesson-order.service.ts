@@ -32,7 +32,11 @@ export class LessonOrderService {
   }
 
   findAll() {
-    return this.prisma.lessonOrder.findMany();
+    return this.prisma.lessonOrder.findMany({
+      include: {
+        scheduleLessons: true,
+      },
+    });
   }
 
   findOne(id: string) {

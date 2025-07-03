@@ -26,7 +26,8 @@ export class CreateGroupDto {
   })
   @IsArray()
   @IsUUID('all', { each: true })
-  studentIds: string[];
+  @IsOptional()
+  studentIds?: string[];
 
   @ApiProperty({
     description: 'ID куратора группы',

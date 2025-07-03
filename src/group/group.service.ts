@@ -23,7 +23,7 @@ export class GroupService {
           ...groupData,
           curatorId,
           students: {
-            connect: studentIds.map((id) => ({ id })),
+            connect: studentIds?.map((id) => ({ id })),
           },
           schedule: {
             create: {},
@@ -173,6 +173,7 @@ export class GroupService {
           throw new NotFoundException(`Group with ID ${id} not found`);
         }
       }
+      console.log({ error });
       throw new InternalServerErrorException('Failed to remove group');
     }
   }

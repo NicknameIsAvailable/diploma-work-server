@@ -1,6 +1,6 @@
 export declare class CreateGroupDto {
     number: string;
-    studentIds: string[];
+    studentIds?: string[];
     curatorId?: string;
     specialityId?: string;
     startYear?: number;

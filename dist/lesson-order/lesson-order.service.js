@@ -35,7 +35,11 @@ let LessonOrderService = class LessonOrderService {
         });
     }
     findAll() {
-        return this.prisma.lessonOrder.findMany();
+        return this.prisma.lessonOrder.findMany({
+            include: {
+                scheduleLessons: true,
+            },
+        });
     }
     findOne(id) {
         return this.prisma.lessonOrder.findUnique({ where: { id } });

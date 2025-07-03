@@ -12,14 +12,24 @@ export declare class LessonOrderController {
         startTime: string;
         endTime: string;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
-    findAll(): import("@prisma/client").Prisma.PrismaPromise<{
+    findAll(): import("@prisma/client").Prisma.PrismaPromise<({
+        scheduleLessons: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date | null;
+            audiences: string[];
+            lessonId: string;
+            scheduleDayId: string | null;
+            orderId: string;
+        }[];
+    } & {
         id: string;
         createdAt: Date;
         updatedAt: Date | null;
         order: number;
         startTime: string;
         endTime: string;
-    }[]>;
+    })[]>;
     findOne(id: string): import("@prisma/client").Prisma.Prisma__LessonOrderClient<{
         id: string;
         createdAt: Date;

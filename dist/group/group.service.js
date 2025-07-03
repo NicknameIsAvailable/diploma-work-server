@@ -25,7 +25,7 @@ let GroupService = class GroupService {
                     ...groupData,
                     curatorId,
                     students: {
-                        connect: studentIds.map((id) => ({ id })),
+                        connect: studentIds?.map((id) => ({ id })),
                     },
                     schedule: {
                         create: {},
@@ -161,6 +161,7 @@ let GroupService = class GroupService {
                     throw new common_1.NotFoundException(`Group with ID ${id} not found`);
                 }
             }
+            console.log({ error });
             throw new common_1.InternalServerErrorException('Failed to remove group');
         }
     }
